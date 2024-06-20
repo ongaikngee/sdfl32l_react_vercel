@@ -14,7 +14,7 @@ const LoginPage = () => {
             </Container>
             <Grid>
                 <GridRow columns={2} only='mobile' centered>
-                    <GridColumn>
+                    <GridColumn width='12'>
                         <Segment color={COLORS.semantic_primary}>
                             <Grid>
                                 <GridRow>
