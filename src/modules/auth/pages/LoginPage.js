@@ -3,7 +3,7 @@ import { useContext } from "react"
 import AuthContext from "../context/AuthContext"
 import { APP_TITLE, LOREM_IPSUM, COLORS } from "../../common/constants/common"
 import { AUTH_INTRO } from "../../common/constants/constant_auth"
-import { Segment, Container, Header, Button, Form, Grid, GridColumn, Divider, FormInput, FormGroup } from 'semantic-ui-react'
+import { Segment, Container, Header, Button, Form, Grid, GridRow, GridColumn, Divider, FormInput, FormGroup } from 'semantic-ui-react'
 
 const LoginPage = () => {
     let { errors, loginUser } = useContext(AuthContext)
@@ -15,6 +15,7 @@ const LoginPage = () => {
                 </p>
             </Container>
             <Segment color={COLORS.semantic_primary}>
+                <h1>hello</h1>
                 <Grid columns={2} relaxed='very' stackable>
                     <GridColumn>
                         <Form onSubmit={loginUser}>

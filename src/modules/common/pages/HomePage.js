@@ -6,7 +6,7 @@ const HomePage = () => {
     let { authTokens, logoutUser } = useContext(AuthContext)
 
     useEffect(() => {
-        getNotes()
+        // getNotes()
     }, [])
 
     let getNotes = async () => {
@@ -28,11 +28,11 @@ const HomePage = () => {
     return (
         <div>
             <p>Welcome to the HomePage!</p>
-            <ul>
+            {/* <ul>
                 {notes.map(note => (
                     <li key={note.id}>{note.body}</li>
                 ))}
-            </ul>
+            </ul> */}
         </div>
     )
 }
