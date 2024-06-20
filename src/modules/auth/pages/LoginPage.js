@@ -7,10 +7,9 @@ import { APP_TITLE, LOREM_IPSUM, COLORS } from "../../common/constants/common"
 const LoginPage = () => {
     return (
         <div>
-            <Container>
+            <Container className="ui padded segment basic">
                 <Header as='h2' color={COLORS.semantic_primary}>{APP_TITLE}</Header>
-                <p>{AUTH_INTRO}
-                </p>
+                <p>{AUTH_INTRO}</p>
             </Container>
             <Grid>
                 <GridRow columns={2} only='mobile' centered>
@@ -28,8 +27,10 @@ const LoginPage = () => {
                 </GridRow>
                 <GridRow columns={1} only='mobile'>
                     <GridColumn verticalAlign='middle'>
-                        <Header as='h4' color={COLORS.semantic_primary}>{APP_TITLE}</Header>
-                        {LOREM_IPSUM.paragraph}
+                        <Container className="ui padded segment basic">
+                            <Header as='h4' color={COLORS.semantic_primary}>{APP_TITLE}</Header>
+                            {LOREM_IPSUM.paragraph}
+                        </Container>
                     </GridColumn>
                 </GridRow>
                 <GridRow columns={2} only='tablet computer'>
