@@ -1,11 +1,21 @@
 import React, { useState, useEffect, useContext } from "react"
-import { Container, Header, Segment } from 'semantic-ui-react';
+import { Grid, GridColumn, GridRow } from 'semantic-ui-react';
 import AuthContext from "../../auth/context/AuthContext"
-import { COLORS } from "../../common/constants/common"
+import HomeStatsComponent from "../components/HomeStatsComponent";
 
 const HomePage = () => {
     let [notes, setNotes] = useState([])
     let { authTokens, logoutUser } = useContext(AuthContext)
+    const column_mobile = 8
+    const column_table = 8
+    const column_computer = 4
+    const statsForTopRow = [
+        { title: 'Rank', value: '20th', color: 'red' },
+        { title: 'Kank', value: '16%', color: 'orange' },
+        { title: 'Score', value: '39/50', color: 'yellow' },
+        { title: 'Position', value: '10th', color: 'teal' }
+    ]
+
 
     useEffect(() => {
         // getNotes()
@@ -28,51 +38,18 @@ const HomePage = () => {
         }
     }
     return (
-        <Segment
-            textAlign='center'
-            style={{
-                minHeight: 500,
-                padding: '1em 0em',
-                backgroundColor: 'white',
-                color: COLORS.semantic_primary, // Hint of orange
-            }}
-            vertical
-        >
-            <Container text>
-                <Header
-                    as='h1'
-                    content='Welcome to the Dashboard'
-                    style={{
-                        fontSize: '4em',
-                        fontWeight: 'normal',
-                        marginBottom: 0,
-                        marginTop: '3em',
-                        color: COLORS.semantic_primary, // Hint of orange
-                    }}
-                />
-                <Header
-                    as='h2'
-                    content='Manage your data effectively and efficiently.'
-                    style={{
-                        fontSize: '1.7em',
-                        fontWeight: 'normal',
-                        marginTop: '1.5em',
-                        color: COLORS.semantic_primary, // Hint of orange
-                    }}
-                />
-            </Container>
-        </Segment>
+        <>
+            <Grid>
+                <GridRow columns={4}>
+                    {statsForTopRow.map((item, index) => (
+                        <GridColumn key={index} mobile={column_mobile} tablet={column_table} computer={column_computer}>
+                            <HomeStatsComponent item={item} />
+                        </GridColumn>
+                    ))}
+                </GridRow>
+            </Grid>
+        </>
     )
-    // return (
-    //     <div>
-    //         <p>Welcome to the HomePage!</p>
-    //         {/* <ul>
-    //             {notes.map(note => (
-    //                 <li key={note.id}>{note.body}</li>
-    //             ))}
-    //         </ul> */}
-    //     </div>
-    // )
 }
 
 export default HomePage
