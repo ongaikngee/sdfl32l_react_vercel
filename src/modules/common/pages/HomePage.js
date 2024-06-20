@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useContext } from "react"
-import { Grid, GridColumn, GridRow } from 'semantic-ui-react';
+import { Grid, GridColumn, GridRow, Segment } from 'semantic-ui-react';
 import AuthContext from "../../auth/context/AuthContext"
 import HomeStatsComponent from "../components/HomeStatsComponent";
+import HomeRadarChartComponent from "../components/charts/HomeRadarChartComponent";
+import HomeDoughnutChartComponent from "../components/charts/HomeDoughnutChartComponent"
 
 const HomePage = () => {
     let [notes, setNotes] = useState([])
@@ -15,7 +17,6 @@ const HomePage = () => {
         { title: 'Score', value: '39/50', color: 'yellow' },
         { title: 'Position', value: '10th', color: 'teal' }
     ]
-
 
     useEffect(() => {
         // getNotes()
@@ -46,6 +47,20 @@ const HomePage = () => {
                             <HomeStatsComponent item={item} />
                         </GridColumn>
                     ))}
+                </GridRow>
+                <GridRow columns={2}>
+                    <GridColumn mobile={16} tablet={8} computer={8}>
+                        <Segment padded='very' color="blue" textAlign='center'>
+                            Stats
+                            <HomeDoughnutChartComponent />
+                        </Segment>
+                    </GridColumn>
+                    <GridColumn mobile={16} tablet={8} computer={8}>
+                    <Segment padded='very' color="violet" textAlign='center'>
+                        Chart Radar
+                            <HomeRadarChartComponent />
+                        </Segment>
+                    </GridColumn>
                 </GridRow>
             </Grid>
         </>
