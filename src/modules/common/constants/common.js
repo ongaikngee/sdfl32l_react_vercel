@@ -13,6 +13,10 @@ export const COLORS = {
     semantic_secondary: 'grey',
 };
 
+export const SIZE = {
+    mobile_icon_size: 'big'
+}
+
 export const LOREM_IPSUM = {
     line: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     paragraph: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dapibus, nisi id consequat molestie, arcu elit rhoncus tellus, in suscipit purus nunc sed diam. Nullam hendrerit consectetur ultricies. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget fermentum dui.',
@@ -22,4 +26,5 @@ export default {
     APP_TITLE,
     COLORS,
     LOREM_IPSUM,
+    SIZE,
 };

@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react"
 import { useHistory } from "react-router-dom"
 import AuthContext from "../../auth/context/AuthContext"
-import { COLORS } from "../constants/common"
+import { COLORS, SIZE } from "../constants/common"
 import { Grid, GridColumn, GridRow, Menu, MenuItem, MenuMenu, Icon } from "semantic-ui-react"
 
 
@@ -11,7 +11,6 @@ const Header = () => {
     let { user, logoutUser } = useContext(AuthContext)
 
     const history = useHistory();
-    const iconSize = 'big'
 
     const handleClick = (event, { name }) => {
         setItem(name)
@@ -28,14 +27,14 @@ const Header = () => {
                             active={item === ''}
                             onClick={handleClick}
                             disabled={!user} >
-                            <Icon name='home' size={iconSize} color={COLORS.semantic_primary} disabled={!user} />
+                            <Icon name='home' size={SIZE.mobile_icon_size} color={COLORS.semantic_primary} disabled={!user} />
                         </MenuItem>
                         <MenuItem
                             name='schools'
                             active={item === 'schools'}
                             onClick={handleClick}
                             disabled={!user}>
-                            <Icon name='building' size={iconSize} color={COLORS.semantic_primary} disabled={!user} />
+                            <Icon name='building' size={SIZE.mobile_icon_size} color={COLORS.semantic_primary} disabled={!user} />
                         </MenuItem>
                         <MenuMenu position='right'>
                             <MenuItem
@@ -43,10 +42,10 @@ const Header = () => {
                                 active={item === 'semantic'}
                                 onClick={handleClick}
                                 disabled={!user}>
-                                <Icon name='shield' size={iconSize} color={COLORS.semantic_primary} disabled={!user} />
+                                <Icon name='shield' size={SIZE.mobile_icon_size} color={COLORS.semantic_primary} disabled={!user} />
                             </MenuItem>
-                            {user ? (<MenuItem onClick={logoutUser}><Icon name='log out' size={iconSize} color={COLORS.semantic_primary} /></MenuItem>) :
-                                (<MenuItem name='login' onClick={handleClick}><Icon name='sign in' size={iconSize} color={COLORS.semantic_primary} /></MenuItem>)
+                            {user ? (<MenuItem onClick={logoutUser}><Icon name='log out' size={SIZE.mobile_icon_size} color={COLORS.semantic_primary} /></MenuItem>) :
+                                (<MenuItem name='login' onClick={handleClick}><Icon name='sign in' size={SIZE.mobile_icon_size} color={COLORS.semantic_primary} /></MenuItem>)
                             }
                         </MenuMenu>
                     </Menu>
