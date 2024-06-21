@@ -16,7 +16,7 @@ const SchoolMenu = () => {
     const menuItems = [
         'schools',
         'pics',
-        'companies',
+        'ratings',
         'links',
         'image'
     ]

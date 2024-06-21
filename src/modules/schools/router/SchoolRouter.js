@@ -25,7 +25,7 @@ const SchoolRouter = () => {
                                 <Route exact path={`${path}`} component={SchoolListingPage} />
                                 <Route path={`${path}/schools`} component={SchoolListingPage} />
                                 <Route path={`${path}/pics`} component={School01Page} />
-                                <Route path={`${path}/companies`} component={School02Page} />
+                                <Route path={`${path}/ratings`} component={School02Page} />
                                 <Route path={`${path}/links`} component={School03Page} />
                                 <Route path={`${path}/image`} component={SchoolImageTemplatePage} />
                             </Switch>
@@ -42,7 +42,7 @@ const SchoolRouter = () => {
                         <Route exact path={`${path}`} component={SchoolListingPage} />
                         <Route path={`${path}/schools`} component={SchoolListingPage} />
                         <Route path={`${path}/pics`} component={School01Page} />
-                        <Route path={`${path}/companies`} component={School02Page} />
+                        <Route path={`${path}/ratings`} component={School02Page} />
                         <Route path={`${path}/links`} component={School03Page} />
                         <Route path={`${path}/image`} component={SchoolImageTemplatePage} />
                     </Switch>

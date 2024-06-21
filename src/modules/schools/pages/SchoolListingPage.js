@@ -41,6 +41,17 @@ const SchoolListingPage = () => {
         <Grid>
             <GridRow>
                 <GridColumn>
+                    <Pagination
+                        defaultActivePage={page}
+                        totalPages={maxPage}
+                        firstItem={null}
+                        lastItem={null}
+                        siblingRange={1}
+                        onPageChange={getPageChange} />
+                </GridColumn>
+            </GridRow>
+            <GridRow>
+                <GridColumn>
                     <Table celled singleLine>
                         <Table.Header>
                             <Table.Row>
@@ -59,17 +70,6 @@ const SchoolListingPage = () => {
                             ))}
                         </Table.Body>
                     </Table>
-                </GridColumn>
-            </GridRow>
-            <GridRow>
-                <GridColumn>
-                    <Pagination
-                        defaultActivePage={page}
-                        totalPages={maxPage}
-                        firstItem={null}
-                        lastItem={null}
-                        siblingRange={3}
-                        onPageChange={getPageChange} />
                 </GridColumn>
             </GridRow>
         </Grid>
