@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Grid, GridRow, Menu, MenuItem } from "semantic-ui-react"
 import { useHistory, useRouteMatch } from "react-router-dom"
+import { SCHOOL_MENU } from "./SchoolRouterSwitch"
 
 const SchoolMenu = () => {
     let { path, url } = useRouteMatch()
@@ -13,32 +14,24 @@ const SchoolMenu = () => {
         history.push(`${path}/${name}`)
     };
 
-    const menuItems = [
-        'schools',
-        'pics',
-        'ratings',
-        'links',
-        'image'
-    ]
-
     return (
         <Grid>
             <GridRow only="mobile">
                 <Menu fluid tabular>
-                    {menuItems.map((menu, index) => (
+                    {SCHOOL_MENU.map((menu, index) => (
                         <MenuItem
-                            name={menu}
-                            active={item === menu}
+                            name={menu.path}
+                            active={item === menu.path}
                             onClick={handleClick} />
                     ))}
                 </Menu>
             </GridRow>
             <GridRow only="tablet computer">
                 <Menu fluid vertical tabular>
-                    {menuItems.map((menu, index) => (
+                    {SCHOOL_MENU.map((menu, index) => (
                         <MenuItem
-                            name={menu}
-                            active={item === menu}
+                            name={menu.path}
+                            active={item === menu.path}
                             onClick={handleClick} />
                     ))}
                 </Menu>
