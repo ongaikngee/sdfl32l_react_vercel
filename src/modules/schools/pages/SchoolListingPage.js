@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, GridColumn, GridRow, Table, Pagination, Dimmer, Loader } from 'semantic-ui-react'
 import { COLORS } from '../../common/constants/common'
+import {
+    Grid, GridColumn, GridRow,
+    Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell,
+    Pagination, Dimmer, Loader
+} from 'semantic-ui-react'
 
 const SchoolListingPage = () => {
     const [schools, setSchools] = useState([])
@@ -65,22 +69,22 @@ const SchoolListingPage = () => {
                 <GridRow>
                     <GridColumn>
                         <Table stackable celled striped singleLine color={COLORS.semantic_primary}>
-                            <Table.Header>
-                                <Table.Row>
-                                    <Table.HeaderCell>Name</Table.HeaderCell>
-                                    <Table.HeaderCell>Address</Table.HeaderCell>
-                                    <Table.HeaderCell>Nature</Table.HeaderCell>
-                                </Table.Row>
-                            </Table.Header>
-                            <Table.Body>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHeaderCell>Name</TableHeaderCell>
+                                    <TableHeaderCell>Address</TableHeaderCell>
+                                    <TableHeaderCell>Nature</TableHeaderCell>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
                                 {schools.map((school, index) => (
-                                    <Table.Row key={index}>
-                                        <Table.Cell>{school.school_name}</Table.Cell>
-                                        <Table.Cell>{school.address}</Table.Cell>
-                                        <Table.Cell>{school.nature_code}</Table.Cell>
-                                    </Table.Row>
+                                    <TableRow key={index}>
+                                        <TableCell>{school.school_name}</TableCell>
+                                        <TableCell>{school.address}</TableCell>
+                                        <TableCell>{school.nature_code}</TableCell>
+                                    </TableRow>
                                 ))}
-                            </Table.Body>
+                            </TableBody>
                         </Table>
                     </GridColumn>
                 </GridRow>
