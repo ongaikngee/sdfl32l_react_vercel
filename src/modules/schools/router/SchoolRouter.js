@@ -4,6 +4,7 @@ import SchoolListingPage from "../pages/SchoolListingPage"
 import School01Page from "../pages/School01Page"
 import School02Page from "../pages/School02Page"
 import School03Page from "../pages/School03Page"
+import SchoolImageTemplatePage from "../pages/SchoolImageTemplatePage"
 import { Route, Switch, useRouteMatch } from "react-router-dom"
 import { Grid, GridColumn } from "semantic-ui-react"
 
@@ -21,6 +22,7 @@ const SchoolRouter = () => {
                     <Route path={`${path}/pics`} component={School01Page} />
                     <Route path={`${path}/companies`} component={School02Page} />
                     <Route path={`${path}/links`} component={School03Page} />
+                    <Route path={`${path}/image`} component={SchoolImageTemplatePage} />
                 </Switch>
             </GridColumn>
         </Grid>

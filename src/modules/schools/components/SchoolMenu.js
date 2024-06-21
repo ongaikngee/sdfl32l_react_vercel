@@ -13,28 +13,22 @@ const SchoolMenu = () => {
         history.push(`${path}/${name}`)
     };
 
+    const menuItems = [
+        'bio',
+        'pics',
+        'companies',
+        'links',
+        'image'
+    ]
+
     return (
         <Menu fluid vertical tabular>
-            <MenuItem
-                name='bio'
-                active={item === 'bio'}
-                onClick={handleClick}
-            />
-            <MenuItem
-                name='pics'
-                active={item === 'pics'}
-                onClick={handleClick}
-            />
-            <MenuItem
-                name='companies'
-                active={item === 'companies'}
-                onClick={handleClick}
-            />
-            <MenuItem
-                name='links'
-                active={item === 'links'}
-                onClick={handleClick}
-            />
+            {menuItems.map((menu, index) => (
+                <MenuItem 
+                name={menu}
+                active={item === menu}
+                onClick={handleClick} />
+            ))}
         </Menu>
     )
 }
