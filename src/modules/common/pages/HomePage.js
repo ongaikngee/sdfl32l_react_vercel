@@ -1,22 +1,12 @@
 import React, { useState, useEffect, useContext } from "react"
-import { Grid, GridColumn, GridRow, Segment } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import AuthContext from "../../auth/context/AuthContext"
-import HomeStatsComponent from "../components/HomeStatsComponent";
-import HomeRadarChartComponent from "../components/charts/HomeRadarChartComponent";
-import HomeDoughnutChartComponent from "../components/charts/HomeDoughnutChartComponent"
+import HomeStatsContainerComponents from "../components/HomeStatsContainerComponents";
+import HomeChartsContainerComponents from "../components/HomeChartsContainerComponents";
 
 const HomePage = () => {
     let [notes, setNotes] = useState([])
     let { authTokens, logoutUser } = useContext(AuthContext)
-    const column_mobile = 8
-    const column_table = 8
-    const column_computer = 4
-    const statsForTopRow = [
-        { title: 'Rank', value: '20th', color: 'red' },
-        { title: 'Kank', value: '16%', color: 'orange' },
-        { title: 'Score', value: '39/50', color: 'yellow' },
-        { title: 'Position', value: '10th', color: 'teal' }
-    ]
 
     useEffect(() => {
         // getNotes()
@@ -39,31 +29,10 @@ const HomePage = () => {
         }
     }
     return (
-        <>
-            <Grid>
-                <GridRow columns={4}>
-                    {statsForTopRow.map((item, index) => (
-                        <GridColumn key={index} mobile={column_mobile} tablet={column_table} computer={column_computer}>
-                            <HomeStatsComponent item={item} />
-                        </GridColumn>
-                    ))}
-                </GridRow>
-                <GridRow columns={2}>
-                    <GridColumn mobile={16} tablet={8} computer={8}>
-                        <Segment padded='very' color="blue" textAlign='center'>
-                            Stats
-                            <HomeDoughnutChartComponent />
-                        </Segment>
-                    </GridColumn>
-                    <GridColumn mobile={16} tablet={8} computer={8}>
-                    <Segment padded='very' color="violet" textAlign='center'>
-                        Chart Radar
-                            <HomeRadarChartComponent />
-                        </Segment>
-                    </GridColumn>
-                </GridRow>
-            </Grid>
-        </>
+        <Grid>
+            <HomeStatsContainerComponents />
+            <HomeChartsContainerComponents />
+        </Grid>
     )
 }
 

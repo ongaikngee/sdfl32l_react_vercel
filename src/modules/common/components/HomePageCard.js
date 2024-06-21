@@ -9,7 +9,7 @@ import {
     Image,
 } from 'semantic-ui-react'
 
-export default function () {
+export default function HomePageCard () {
     // TODO: This compoments is currently not in use. will use it in dashboard soon
     return (
         <Card>
