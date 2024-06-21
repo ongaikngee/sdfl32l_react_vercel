@@ -1,10 +1,10 @@
 import React, { useState } from "react"
-import { Menu, MenuItem } from "semantic-ui-react"
+import { Grid, GridRow, Menu, MenuItem } from "semantic-ui-react"
 import { useHistory, useRouteMatch } from "react-router-dom"
 
 const SchoolMenu = () => {
     let { path, url } = useRouteMatch()
-    const [item, setItem] = useState('bio')
+    const [item, setItem] = useState('schools')
 
     const history = useHistory()
 
@@ -14,7 +14,7 @@ const SchoolMenu = () => {
     };
 
     const menuItems = [
-        'bio',
+        'schools',
         'pics',
         'companies',
         'links',
@@ -22,14 +22,28 @@ const SchoolMenu = () => {
     ]
 
     return (
-        <Menu fluid vertical tabular>
-            {menuItems.map((menu, index) => (
-                <MenuItem 
-                name={menu}
-                active={item === menu}
-                onClick={handleClick} />
-            ))}
-        </Menu>
+        <Grid>
+            <GridRow only="mobile">
+                <Menu fluid tabular>
+                    {menuItems.map((menu, index) => (
+                        <MenuItem
+                            name={menu}
+                            active={item === menu}
+                            onClick={handleClick} />
+                    ))}
+                </Menu>
+            </GridRow>
+            <GridRow only="tablet computer">
+                <Menu fluid vertical tabular>
+                    {menuItems.map((menu, index) => (
+                        <MenuItem
+                            name={menu}
+                            active={item === menu}
+                            onClick={handleClick} />
+                    ))}
+                </Menu>
+            </GridRow>
+        </Grid>
     )
 }
 
