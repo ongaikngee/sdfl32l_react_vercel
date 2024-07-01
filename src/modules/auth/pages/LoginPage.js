@@ -2,13 +2,13 @@ import React from "react"
 import { AUTH_INTRO } from "../../common/constants/constant_auth"
 import { Segment, Container, Header, Grid, GridRow, GridColumn, Divider } from 'semantic-ui-react'
 import LoginFormComponent from "../components/LoginFormComponent"
-import { APP_TITLE, LOREM_IPSUM, COLORS } from "../../common/constants/common"
+import { APP_SETTING, LOREM_IPSUM, COLORS } from "../../common/constants/common"
 
 const LoginPage = () => {
     return (
         <div>
             <Container className="ui padded segment basic">
-                <Header as='h2' color={COLORS.semantic_primary}>{APP_TITLE}</Header>
+                <Header as='h2' color={COLORS.semantic_primary}>{APP_SETTING.app_title}</Header>
                 <p>{AUTH_INTRO}</p>
             </Container>
             <Grid>
@@ -28,7 +28,7 @@ const LoginPage = () => {
                 <GridRow columns={1} only='mobile'>
                     <GridColumn verticalAlign='middle'>
                         <Container className="ui padded segment basic">
-                            <Header as='h4' color={COLORS.semantic_primary}>{APP_TITLE}</Header>
+                            <Header as='h4' color={COLORS.semantic_primary}>{APP_SETTING.app_title}</Header>
                             {LOREM_IPSUM.paragraph}
                         </Container>
                     </GridColumn>
@@ -40,7 +40,7 @@ const LoginPage = () => {
                                 <LoginFormComponent />
                             </GridColumn>
                             <GridColumn verticalAlign='middle'>
-                                <Header as='h4' color={COLORS.semantic_primary}>{APP_TITLE}</Header>
+                                <Header as='h4' color={COLORS.semantic_primary}>{APP_SETTING.app_title}</Header>
                                 {LOREM_IPSUM.paragraph}
                             </GridColumn>
                         </Grid>
