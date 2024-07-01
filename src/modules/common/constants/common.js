@@ -1,4 +1,7 @@
-export const APP_TITLE = "Every school, a good school"
+export const APP_SETTING = {
+    app_title: 'Every school, a good school',
+    base_url_for_backend: 'https://ongaikngee.pythonanywhere.com/'
+}
 
 export const COLORS = {
     primary: '#007bff',
@@ -23,7 +26,7 @@ export const LOREM_IPSUM = {
 };
 
 export default {
-    APP_TITLE,
+    APP_SETTING,
     COLORS,
     LOREM_IPSUM,
     SIZE,

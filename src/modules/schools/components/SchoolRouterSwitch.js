@@ -3,14 +3,14 @@ import { Route, Switch, useRouteMatch } from "react-router-dom"
 import SchoolListingPage from "../pages/SchoolListingPage"
 import School01Page from "../pages/School01Page"
 import School02Page from "../pages/School02Page"
-import School03Page from "../pages/School03Page"
+import SchoolRegPhasesInfoPage from "../pages/SchoolRegPhasesInfoPage"
 import SchoolImageTemplatePage from "../pages/SchoolImageTemplatePage"
 
 export const SCHOOL_MENU = [
     { path: 'schools', page: SchoolListingPage },
+    { path: 'Phases', page: SchoolRegPhasesInfoPage },
     { path: 'pics', page: School01Page },
     { path: 'ratings', page: School02Page },
-    { path: 'links', page: School03Page },
     { path: 'image', page: SchoolImageTemplatePage },
 ]
 
