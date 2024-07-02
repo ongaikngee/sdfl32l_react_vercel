@@ -5,6 +5,7 @@ import {
     Card, CardContent, CardHeader, CardMeta, CardDescription
 } from 'semantic-ui-react'
 import { APP_SETTING, COLORS } from '../../common/constants/common'
+import SchoolListConvertor from "../components/SchoolListConvertor"
 
 const SchoolRegPhasesInfoPage = () => {
     const [phases, setPhases] = useState([])
@@ -37,6 +38,12 @@ const SchoolRegPhasesInfoPage = () => {
         setItem(my_id)
     };
 
+    const removePhase = (name) => {
+        const replacement_word = name.split(' ')
+        replacement_word.shift()
+        return replacement_word.join(' ')
+    }
+
     return (
         <>
             <h1>Registration phases</h1>
@@ -58,13 +65,12 @@ const SchoolRegPhasesInfoPage = () => {
                                         {...(item === phase.id && { class: 'step active' })}
                                         onClick={(event) => handleClick(event, { my_id: phase.id })}>
                                         <div class="content">
-                                            <div class="title">{phase.phase_name}</div>
+                                            <div class="title">{removePhase(phase.phase_name)}</div>
                                         </div>
                                     </div>
 
                                 ))}
                             </div>
-                            {/* <div class="ui attached segment"> */}
                             {phases
                                 .filter(phase => phase.id === item) // Filter out the active item
                                 .map(phase => (
@@ -72,11 +78,12 @@ const SchoolRegPhasesInfoPage = () => {
                                         <CardContent>
                                             <CardHeader>{phase.phase_name}</CardHeader>
                                             <CardMeta>Starts: {phase.start_date}</CardMeta>
-                                            <CardDescription>{phase.description}</CardDescription>
+                                            <CardDescription>
+                                                <SchoolListConvertor description={phase.description} />
+                                            </CardDescription>
                                         </CardContent>
                                     </Card>
                                 ))}
-                            {/* </div> */}
                         </GridColumn>
                     </GridRow>
                 </Grid>
