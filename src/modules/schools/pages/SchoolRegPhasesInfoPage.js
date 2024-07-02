@@ -67,9 +67,9 @@ const SchoolRegPhasesInfoPage = () => {
                 <Grid>
                     <GridRow>
                         <GridColumn>
-                            <div class="ui steps">
+                            <div class="ui fluid unstackable steps">
                                 {phases.map((phase, index) => (
-                                    <div class="step"
+                                    <div class="link step"
                                         {...(item === phase.id && { class: 'step active' })}
                                         onClick={(event) => handleClick(event, { my_id: phase.id })}>
                                         <div class="content">
