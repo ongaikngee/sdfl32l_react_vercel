@@ -16,16 +16,16 @@ export const SCHOOL_MENU = [
 
 const SchoolRouterSwitch = () => {
     let { path, url } = useRouteMatch()
-  return (
-    <Switch>
-        <Route exact path={`${path}`} component={SchoolListingPage} />
-        {SCHOOL_MENU.map((menu) => {
-            return (
-                <Route path={`${path}/${menu.path}`} component={menu.page} />
-            )
-        })}
-    </Switch>
-  )
+    return (
+        <Switch>
+            <Route exact path={`${path}`} component={SchoolListingPage} />
+            {SCHOOL_MENU.map((menu) => {
+                return (
+                    <Route path={`${path}/${menu.path}`} component={menu.page} />
+                )
+            })}
+        </Switch>
+    )
 }
 
 export default SchoolRouterSwitch
