@@ -6,7 +6,7 @@ import {
     Label, Icon
 } from 'semantic-ui-react'
 import moment from 'moment';
-import { APP_SETTING, COLORS } from '../../common/constants/common'
+import { APP_SETTING, P1_REG_SETTING, COLORS } from '../../common/constants/common'
 import SchoolListConvertor from "../components/SchoolListConvertor"
 
 const SchoolRegPhasesInfoPage = () => {
@@ -43,6 +43,9 @@ const SchoolRegPhasesInfoPage = () => {
     // Methods for removal of 1st word of sentence.
     // E.g Phase 1 => 1
     const removePhase = (name) => {
+        if (name === P1_REG_SETTING.phase_2c_s) {
+            name = P1_REG_SETTING.phase_2c_s_shortform
+        }
         const replacement_word = name.split(' ')
         replacement_word.shift()
         return replacement_word.join(' ')
@@ -51,14 +54,21 @@ const SchoolRegPhasesInfoPage = () => {
     // Methods to convert date to DateString
     const formatDate = (date) => {
         const dayWrapper = moment(date)
-        return dayWrapper.format("Do MMM YYYY, ddd")
+        return dayWrapper.format(APP_SETTING.preferred_date_format)
     }
 
 
     // Methods to convert date Moment fromNow function
-    const formatDateFromNow = (date) => {
-        const dayWrapper = moment(date)
-        return dayWrapper.fromNow()
+    const formatDateFromNow = (start, end) => {
+        const now = moment()
+        const start_date = moment(start)
+        const end_date = moment(end)
+        if (now < start_date){
+            return start_date.fromNow()
+        }else if (now > end_date) {
+            return end_date.fromNow()
+        }
+        return P1_REG_SETTING.current_phase
     }
 
     return (
@@ -94,14 +104,14 @@ const SchoolRegPhasesInfoPage = () => {
                                         <CardContent>
                                             <CardHeader>{phase.phase_name}</CardHeader>
                                             <CardMeta>{formatDate(phase.start_date)} to {formatDate(phase.end_date)}</CardMeta>
-                                            <CardMeta>
-                                                <Label color={COLORS.semantic_primary}>
-                                                    <Icon name='calendar alternate' />  {formatDateFromNow(phase.start_date)}
-                                                </Label>
-                                            </CardMeta>
                                             <CardDescription>
                                                 <SchoolListConvertor description={phase.description} />
                                             </CardDescription>
+                                        </CardContent>
+                                        <CardContent>
+                                            <Label color={COLORS.semantic_primary} ribbon='right'>
+                                                <Icon name='calendar alternate' />  {formatDateFromNow(phase.start_date, phase.end_date)}
+                                            </Label>
                                         </CardContent>
                                     </Card>
                                 ))}
