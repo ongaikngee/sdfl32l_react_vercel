@@ -38,10 +38,18 @@ const SchoolRegPhasesInfoPage = () => {
         setItem(my_id)
     };
 
+    // Methods for removal of 1st word of sentence.
+    // E.g Phase 1 => 1
     const removePhase = (name) => {
         const replacement_word = name.split(' ')
         replacement_word.shift()
         return replacement_word.join(' ')
+    }
+
+    // Methods to convert date to DateString
+    const formatDate = (date) => {
+        const d = new Date(date)
+        return d.toDateString()
     }
 
     return (
@@ -77,7 +85,7 @@ const SchoolRegPhasesInfoPage = () => {
                                     <Card attached fluid color={COLORS.semantic_primary}>
                                         <CardContent>
                                             <CardHeader>{phase.phase_name}</CardHeader>
-                                            <CardMeta>Starts: {phase.start_date}</CardMeta>
+                                            <CardMeta>{formatDate(phase.start_date)} to {formatDate(phase.end_date)}</CardMeta>
                                             <CardDescription>
                                                 <SchoolListConvertor description={phase.description} />
                                             </CardDescription>
