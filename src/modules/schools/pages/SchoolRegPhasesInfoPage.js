@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react"
 import {
     Grid, GridColumn, GridRow,
     Dimmer, Loader,
-    Card, CardContent, CardHeader, CardMeta, CardDescription
+    Card, CardContent, CardHeader, CardMeta, CardDescription,
+    Label, Icon
 } from 'semantic-ui-react'
+import moment from 'moment';
 import { APP_SETTING, COLORS } from '../../common/constants/common'
 import SchoolListConvertor from "../components/SchoolListConvertor"
 
@@ -48,8 +50,15 @@ const SchoolRegPhasesInfoPage = () => {
 
     // Methods to convert date to DateString
     const formatDate = (date) => {
-        const d = new Date(date)
-        return d.toDateString()
+        const dayWrapper = moment(date)
+        return dayWrapper.format("Do MMM YYYY, ddd")
+    }
+
+
+    // Methods to convert date Moment fromNow function
+    const formatDateFromNow = (date) => {
+        const dayWrapper = moment(date)
+        return dayWrapper.fromNow()
     }
 
     return (
@@ -76,16 +85,20 @@ const SchoolRegPhasesInfoPage = () => {
                                             <div class="title">{removePhase(phase.phase_name)}</div>
                                         </div>
                                     </div>
-
                                 ))}
                             </div>
                             {phases
                                 .filter(phase => phase.id === item) // Filter out the active item
                                 .map(phase => (
-                                    <Card attached fluid color={COLORS.semantic_primary}>
+                                    <Card ui fluid color={COLORS.semantic_primary}>
                                         <CardContent>
                                             <CardHeader>{phase.phase_name}</CardHeader>
                                             <CardMeta>{formatDate(phase.start_date)} to {formatDate(phase.end_date)}</CardMeta>
+                                            <CardMeta>
+                                                <Label color={COLORS.semantic_primary}>
+                                                    <Icon name='calendar alternate' />  {formatDateFromNow(phase.start_date)}
+                                                </Label>
+                                            </CardMeta>
                                             <CardDescription>
                                                 <SchoolListConvertor description={phase.description} />
                                             </CardDescription>
