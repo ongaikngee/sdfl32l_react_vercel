@@ -67,8 +67,9 @@ const SchoolRegPhasesInfoPage = () => {
             return start_date.fromNow()
         }else if (now > end_date) {
             return end_date.fromNow()
+        }else {
+            return `${P1_REG_SETTING.current_phase}, ending ${end_date.fromNow()}`
         }
-        return P1_REG_SETTING.current_phase
     }
 
     return (

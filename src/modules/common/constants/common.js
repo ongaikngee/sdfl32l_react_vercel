@@ -1,6 +1,7 @@
 export const APP_SETTING = {
     app_title: 'Every school, a good school',
     base_url_for_backend: 'https://ongaikngee.pythonanywhere.com/',
+    // base_url_for_backend: 'http://localhost:8000/',
     preferred_date_format: 'Do MMM YYYY, ddd'
 }
 
@@ -8,7 +9,7 @@ export const P1_REG_SETTING = {
     phase_1:'',
     phase_2c_s: 'Phase 2C Supplementary',
     phase_2c_s_shortform: 'Phase 2C(s)',
-    current_phase: 'Current Phase'
+    current_phase: 'Current phase'
 }
 
 export const COLORS = {
