@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Grid, GridColumn, GridRow, Table, Pagination } from 'semantic-ui-react'
+import { useHistory } from 'react-router-dom';
 
 const SemanticSchoolListingAPIPage = () => {
   const [schools, setSchools] = useState([])
@@ -35,6 +36,12 @@ const SemanticSchoolListingAPIPage = () => {
       console.log('Something went wrong!')
     }
   }
+
+  const history = useHistory();
+
+  const navigateToPage = (id) => {
+    history.push(`/semantic/schoolResult/${id}`);
+  }
   return (
     <Grid>
       <GridRow>
@@ -42,6 +49,7 @@ const SemanticSchoolListingAPIPage = () => {
           <Table celled singleLine>
             <Table.Header>
               <Table.Row>
+                <Table.HeaderCell>Result</Table.HeaderCell>
                 <Table.HeaderCell>Name</Table.HeaderCell>
                 <Table.HeaderCell>Address</Table.HeaderCell>
                 <Table.HeaderCell>Nature</Table.HeaderCell>
@@ -50,6 +58,7 @@ const SemanticSchoolListingAPIPage = () => {
             <Table.Body>
               {schools.map((school, index) => (
                 <Table.Row key={index}>
+                  <Table.Cell><button onClick={() => navigateToPage(school._id)}>Result</button></Table.Cell>
                   <Table.Cell>{school.school_name}</Table.Cell>
                   <Table.Cell>{school.address}</Table.Cell>
                   <Table.Cell>{school.nature_code}</Table.Cell>

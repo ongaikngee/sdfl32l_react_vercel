@@ -5,6 +5,7 @@ import SemanticGridPage from "../pages/SemanticGridPage"
 import SemanticSegmentPage from "../pages/SemanticSegmentPage"
 import SemanticSchoolListingAPIPage from "../pages/SemanticSchoolListingAPIPage"
 import SemanticSchoolDataPage from "../pages/SemanticSchoolDataPage"
+import SemanticSchoolResultPage from "../pages/SemanticSchoolResultPage"
 import {
     Grid,
     GridColumn,
@@ -25,6 +26,7 @@ const SemanticRouter = () => {
                         <Route path={`${path}/segment`} component={SemanticSegmentPage} />
                         <Route path={`${path}/getSchoolListing`} component={SemanticSchoolListingAPIPage} />
                         <Route path={`${path}/schoolData`} component={SemanticSchoolDataPage} />
+                        <Route path={`${path}/schoolResult/:id`} component={SemanticSchoolResultPage} />
                     </Switch>
                 </GridColumn>
             </Grid>

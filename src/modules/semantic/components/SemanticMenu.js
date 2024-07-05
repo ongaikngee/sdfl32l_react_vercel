@@ -54,6 +54,10 @@ const SemanticMenu = () => {
                             name='schoolData'
                             active={item === 'schoolData'}
                             onClick={handleClick} />
+                        <MenuItem
+                            name='schoolResult'
+                            active={item === 'schoolResult'}
+                            onClick={handleClick} />
                         <MenuItem>item 3</MenuItem>
                     </MenuMenu>
                 </MenuItem>
