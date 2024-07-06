@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem('authTokens', JSON.stringify(data))
                 history.push('/')
             } else {
-                alert('Something went wrong!')
+                alert(`Something went wrong!, Status: ${response.status}`)
             }
         }
     }

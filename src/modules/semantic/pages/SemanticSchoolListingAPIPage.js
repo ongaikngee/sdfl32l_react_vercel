@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, GridColumn, GridRow, Table, Pagination } from 'semantic-ui-react'
+import { Grid, GridColumn, GridRow, Table, Pagination, Label } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom';
 
 const SemanticSchoolListingAPIPage = () => {
@@ -7,6 +7,7 @@ const SemanticSchoolListingAPIPage = () => {
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
   const [maxPage, setMaxPage] = useState(0)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     getAPI()
@@ -18,22 +19,26 @@ const SemanticSchoolListingAPIPage = () => {
 
   const getAPI = async () => {
 
+    setError(null)
     const offset = (page - 1) * limit
 
     // API for MOE School
     const base_url = "https://data.gov.sg/api/action/datastore_search"
     const url = base_url + `?resource_id=d_688b934f82c1059ed0a6993d2a829089&limit=${limit}&offset=${offset}`
 
-    const response = await fetch(url, {
-      method: 'GET'
-    })
-    const data = await response.json()
-
-    if (response.status === 200) {
+    try {
+      const response = await fetch(url, {
+        method: 'GET'
+      })
+      if (!response.ok) {
+        let errorMessage = await response.text();
+        throw new Error(`Response status: ${response.status},  message: ${errorMessage}`)
+      }
+      const data = await response.json();
       setSchools(data.result.records)
       setMaxPage(Math.floor(data.result.total / limit) + 1)
-    } else {
-      console.log('Something went wrong!')
+    } catch (e) {
+      setError(e.message)
     }
   }
 
@@ -46,6 +51,11 @@ const SemanticSchoolListingAPIPage = () => {
     <Grid>
       <GridRow>
         <GridColumn>
+          {error && (
+            <Label basic color='red'>
+              {error}
+            </Label>
+          )}
           <Table celled singleLine>
             <Table.Header>
               <Table.Row>

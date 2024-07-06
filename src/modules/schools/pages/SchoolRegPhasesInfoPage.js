@@ -13,26 +13,31 @@ const SchoolRegPhasesInfoPage = () => {
     const [phases, setPhases] = useState([])
     const [item, setItem] = useState(1)
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         getAPI()
     }, []);
 
     const getAPI = async () => {
+        setError(null)
         setLoading(true)
         const base_url = APP_SETTING.base_url_for_backend
         const url = base_url + `p1_reg_phases/`
 
-        const response = await fetch(url, {
-            method: 'GET'
-        })
-        const data = await response.json()
-
-        if (response.status === 200) {
+        try {
+            const response = await fetch(url, {
+                method: 'GET'
+            })
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`)
+            }
+            const data = await response.json();
             setPhases(data)
+        } catch (e) {
+            setError(e.message)
+        } finally {
             setLoading(false)
-        } else {
-            console.log('Something went wrong!')
         }
     }
 
@@ -63,11 +68,11 @@ const SchoolRegPhasesInfoPage = () => {
         const now = moment()
         const start_date = moment(start)
         const end_date = moment(end)
-        if (now < start_date){
+        if (now < start_date) {
             return start_date.fromNow()
-        }else if (now > end_date) {
+        } else if (now > end_date) {
             return end_date.fromNow()
-        }else {
+        } else {
             return `${P1_REG_SETTING.current_phase}, ending ${end_date.fromNow()}`
         }
     }
@@ -118,6 +123,15 @@ const SchoolRegPhasesInfoPage = () => {
                                 ))}
                         </GridColumn>
                     </GridRow>
+                    {error && (
+                        <GridRow>
+                            <GridColumn>
+                                <Label basic color='red'>
+                                    {error}
+                                </Label>
+                            </GridColumn>
+                        </GridRow>
+                    )}
                 </Grid>
 
             )
