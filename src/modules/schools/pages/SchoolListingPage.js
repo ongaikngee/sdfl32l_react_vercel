@@ -3,35 +3,35 @@ import { COLORS } from '../../common/constants/common'
 import {
     Grid, GridColumn, GridRow,
     Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell,
-    Pagination, Dimmer, Loader, Label
+    Pagination, Dimmer, Loader, Label, Button
 } from 'semantic-ui-react'
+import { useHistory } from 'react-router-dom';
 
 const SchoolListingPage = () => {
     const [schools, setSchools] = useState([])
-    const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(10)
-    const [maxPage, setMaxPage] = useState(0)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const [activePage, setActivePage] = useState(1); // current active page
+    const itemsPerPage = 10 // number of items per page
+    const limit = 400 // limit queries records
+    const startIndex = (activePage - 1) * itemsPerPage
+    const endIndex = startIndex + itemsPerPage
+    const displayedSchools = schools.slice(startIndex, endIndex)
 
     useEffect(() => {
         getAPI()
-    }, [page]);
+    }, []);
 
-    const getPageChange = (e, { activePage }) => {
-        setPage(activePage)
-    }
+    const handlePaginationChange = (e, { activePage }) => setActivePage(activePage);
+
 
     const getAPI = async () => {
-
         setError(null)
         setLoading(true)
 
-        const offset = (page - 1) * limit
-
         // API for MOE School
         const base_url = "https://data.gov.sg/api/action/datastore_search"
-        const url = base_url + `?resource_id=d_688b934f82c1059ed0a6993d2a829089&limit=${limit}&offset=${offset}`
+        const url = base_url + `?resource_id=d_688b934f82c1059ed0a6993d2a829089&limit=${limit}`
 
         try {
             const response = await fetch(url, {
@@ -40,26 +40,34 @@ const SchoolListingPage = () => {
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`)
             }
-            const data = await response.json();
-            setSchools(data.result.records)
-            setMaxPage(Math.floor(data.result.total / limit) + 1)
+            const data = await response.json()
+            const filteredSchools = data.result.records.filter(school => school.mainlevel_code == 'PRIMARY');
+            setSchools(filteredSchools)
         } catch (e) {
             setError(e.message)
         } finally {
             setLoading(false)
         }
     }
+
+    const history = useHistory()
+
+    const navigateToPage = (id) => {
+        history.push(`/semantic/schoolResult/${id}`);
+    }
+
     return (
         <Grid>
             <GridRow>
                 <GridColumn>
                     <Pagination
-                        defaultActivePage={page}
-                        totalPages={maxPage}
+                        activePage={activePage}
+                        onPageChange={handlePaginationChange}
                         firstItem={null}
                         lastItem={null}
                         siblingRange={1}
-                        onPageChange={getPageChange} />
+                        totalPages={Math.ceil(schools.length / itemsPerPage)}
+                    />
                 </GridColumn>
             </GridRow>
             {loading ? (
@@ -76,14 +84,16 @@ const SchoolListingPage = () => {
                         <Table stackable celled striped singleLine color={COLORS.semantic_primary}>
                             <TableHeader>
                                 <TableRow>
+                                    <Table.HeaderCell>Result</Table.HeaderCell>
                                     <TableHeaderCell>Name</TableHeaderCell>
                                     <TableHeaderCell>Address</TableHeaderCell>
                                     <TableHeaderCell>Nature</TableHeaderCell>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {schools.map((school, index) => (
+                                {displayedSchools.map((school, index) => (
                                     <TableRow key={index}>
+                                        <Table.Cell><Button onClick={() => navigateToPage(school.school_name)}>Result</Button></Table.Cell>
                                         <TableCell>{school.school_name}</TableCell>
                                         <TableCell>{school.address}</TableCell>
                                         <TableCell>{school.nature_code}</TableCell>

@@ -8,29 +8,30 @@ import {
 
 const School02Page = () => {
     const [schools, setSchools] = useState([])
+    const [page, setPage] = useState(1)
+    const [limit, setLimit] = useState(10)
+    const [maxPage, setMaxPage] = useState(0)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    const [activePage, setActivePage] = useState(1); // current active page
-    const itemsPerPage = 10 // number of items per page
-    const limit = 400 // limit queries records
-    const startIndex = (activePage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
-    const displayedSchools = schools.slice(startIndex, endIndex)
 
     useEffect(() => {
         getAPI()
-    }, []);
+    }, [page]);
 
-    const handlePaginationChange = (e, { activePage }) => setActivePage(activePage);
-
+    const getPageChange = (e, { activePage }) => {
+        setPage(activePage)
+    }
 
     const getAPI = async () => {
+
         setError(null)
         setLoading(true)
 
+        const offset = (page - 1) * limit
+
         // API for MOE School
         const base_url = "https://data.gov.sg/api/action/datastore_search"
-        const url = base_url + `?resource_id=d_688b934f82c1059ed0a6993d2a829089&limit=${limit}`
+        const url = base_url + `?resource_id=d_688b934f82c1059ed0a6993d2a829089&limit=${limit}&offset=${offset}`
 
         try {
             const response = await fetch(url, {
@@ -39,9 +40,9 @@ const School02Page = () => {
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`)
             }
-            const data = await response.json()
-            const filteredSchools = data.result.records.filter(school => school.mainlevel_code == 'PRIMARY');
-            setSchools(filteredSchools)
+            const data = await response.json();
+            setSchools(data.result.records)
+            setMaxPage(Math.floor(data.result.total / limit) + 1)
         } catch (e) {
             setError(e.message)
         } finally {
@@ -53,13 +54,12 @@ const School02Page = () => {
             <GridRow>
                 <GridColumn>
                     <Pagination
-                        activePage={activePage}
-                        onPageChange={handlePaginationChange}
+                        defaultActivePage={page}
+                        totalPages={maxPage}
                         firstItem={null}
                         lastItem={null}
                         siblingRange={1}
-                        totalPages={Math.ceil(schools.length / itemsPerPage)}
-                    />
+                        onPageChange={getPageChange} />
                 </GridColumn>
             </GridRow>
             {loading ? (
@@ -82,7 +82,7 @@ const School02Page = () => {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {displayedSchools.map((school, index) => (
+                                {schools.map((school, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{school.school_name}</TableCell>
                                         <TableCell>{school.address}</TableCell>
