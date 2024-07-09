@@ -5,7 +5,7 @@ import { GridRow, GridColumn, Dimmer, Loader, Label } from 'semantic-ui-react';
 
 export default function SemanticSchoolResultPage() {
 
-    const { id } = useParams(); // Get the id parameter from the URL
+    const { school } = useParams() // Get the id parameter from the URL
     const [result, setResult] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null);
@@ -17,7 +17,7 @@ export default function SemanticSchoolResultPage() {
         setError(null)
         setLoading(true)
         const base_url = APP_SETTING.base_url_for_backend
-        const url = base_url + `p1_reg_results/${id}/`
+        const url = base_url + `p1_reg_results/search/?school=${school}`
 
         try {
             const response = await fetch(url, {
@@ -38,8 +38,6 @@ export default function SemanticSchoolResultPage() {
 
     return (
         <div>
-            <h1>Welcome</h1>
-            <h1>API Data</h1>
             {loading ? (
                 <GridRow style={{ height: '200px' }}>
                     <GridColumn>
@@ -49,13 +47,44 @@ export default function SemanticSchoolResultPage() {
                     </GridColumn>
                 </GridRow>
             ) : (
-                <ul>
-                    {result && Object.keys(result).map(key => (
-                        <li key={key}>
-                            <strong>{key}</strong>: {result[key]}
-                        </li>
-                    ))}
-                </ul>
+                <div>
+                    <h1>Results</h1>
+                    {result && result.length > 0 ? (
+                        result.map(item => (
+                            <div key={item.id} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+                                <h2>{item.school} ({item.year})</h2>
+                                <p>Total Vacancy: {item.total_vacancy}</p>
+                                <p>Phase 2A:</p>
+                                <ul>
+                                    <li>Vacancies: {item.phase_2a_vacancies}</li>
+                                    <li>Applicants: {item.phase_2a_applicants}</li>
+                                    <li>Ballot: {item.phase_2a_ballot}</li>
+                                </ul>
+                                <p>Phase 2B:</p>
+                                <ul>
+                                    <li>Vacancies: {item.phase_2b_vacancies}</li>
+                                    <li>Applicants: {item.phase_2b_applicants}</li>
+                                    <li>Ballot: {item.phase_2b_ballot}</li>
+                                </ul>
+                                <p>Phase 2C:</p>
+                                <ul>
+                                    <li>Vacancies: {item.phase_2c_vacancies}</li>
+                                    <li>Applicants: {item.phase_2c_applicants}</li>
+                                    <li>Ballot: {item.phase_2c_ballot}</li>
+                                </ul>
+                                <p>Phase 2CS:</p>
+                                <ul>
+                                    <li>Vacancies: {item.phase_2cs_vacancies}</li>
+                                    <li>Applicants: {item.phase_2cs_applicants}</li>
+                                    <li>Ballot: {item.phase_2cs_ballot}</li>
+                                </ul>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No results found for {school}</p>
+                    )}
+                </div>
+
             )}
             {error && (
                 <Label basic color='red'>
