@@ -52,8 +52,8 @@ const SchoolListingPage = () => {
 
     const history = useHistory()
 
-    const navigateToPage = (id) => {
-        history.push(`/semantic/schoolResult/${id}`);
+    const navigateToPage = (school) => {
+        history.push(`/semantic/schoolResult/${school}`);
     }
 
     return (
