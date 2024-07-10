@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Button, Form, FormInput, FormGroup } from 'semantic-ui-react'
+import { Button, Form, FormInput } from 'semantic-ui-react'
 import AuthContext from "../context/AuthContext"
 import { COLORS } from "../../common/constants/common"
 
