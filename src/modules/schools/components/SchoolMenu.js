@@ -20,6 +20,7 @@ const SchoolMenu = () => {
                 <Menu fluid tabular>
                     {SCHOOL_MENU.map((menu, index) => (
                         <MenuItem
+                            key={index}
                             name={menu.path}
                             active={item === menu.path}
                             onClick={handleClick} />
@@ -30,6 +31,7 @@ const SchoolMenu = () => {
                 <Menu fluid vertical tabular>
                     {SCHOOL_MENU.map((menu, index) => (
                         <MenuItem
+                            key={index}
                             name={menu.path}
                             active={item === menu.path}
                             onClick={handleClick} />
