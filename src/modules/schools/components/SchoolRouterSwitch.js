@@ -5,6 +5,7 @@ import School01Page from "../pages/School01Page"
 import School02Page from "../pages/School02Page"
 import SchoolRegPhasesInfoPage from "../pages/SchoolRegPhasesInfoPage"
 import SchoolImageTemplatePage from "../pages/SchoolImageTemplatePage"
+import SchoolRegResultPage from '../pages/SchoolRegResultPage'
 
 export const SCHOOL_MENU = [
     { path: 'schools', page: SchoolListingPage },
@@ -19,6 +20,7 @@ const SchoolRouterSwitch = () => {
     return (
         <Switch>
             <Route exact path={`${path}`} component={SchoolListingPage} />
+            <Route path={`${path}/schoolResult/:school`} component={SchoolRegResultPage} />
             {SCHOOL_MENU.map((menu) => {
                 return (
                     <Route path={`${path}/${menu.path}`} component={menu.page} />

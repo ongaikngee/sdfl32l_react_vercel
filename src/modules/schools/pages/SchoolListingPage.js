@@ -41,7 +41,7 @@ const SchoolListingPage = () => {
                 throw new Error(`Response status: ${response.status}`)
             }
             const data = await response.json()
-            const filteredSchools = data.result.records.filter(school => school.mainlevel_code == 'PRIMARY');
+            const filteredSchools = data.result.records.filter(school => school.mainlevel_code === 'PRIMARY');
             setSchools(filteredSchools)
         } catch (e) {
             setError(e.message)
@@ -53,7 +53,7 @@ const SchoolListingPage = () => {
     const history = useHistory()
 
     const navigateToPage = (school) => {
-        history.push(`/semantic/schoolResult/${school}`);
+        history.push(`/schools/schoolResult/${school}`);
     }
 
     return (
