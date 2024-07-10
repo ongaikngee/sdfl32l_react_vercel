@@ -4,7 +4,6 @@ import { Doughnut } from 'react-chartjs-2'
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 export default function SchoolRegResultChartPage({ chartData }) {
-    console.log('chartData', chartData)
     const data = {
         labels: ['Phase 1', 'Phase 2A', 'Phase 2B', 'Phase 2C', 'Phase 2CS', 'Remainding'],
         datasets: [

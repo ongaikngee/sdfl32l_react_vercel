@@ -16,7 +16,7 @@ export const SCHOOL_MENU = [
 ]
 
 const SchoolRouterSwitch = () => {
-    let { path, url } = useRouteMatch()
+    let { path } = useRouteMatch()
     return (
         <Switch>
             <Route exact path={`${path}`} component={SchoolListingPage} />

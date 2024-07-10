@@ -4,7 +4,7 @@ import { useHistory, useRouteMatch } from "react-router-dom"
 import { SCHOOL_MENU } from "./SchoolRouterSwitch"
 
 const SchoolMenu = () => {
-    let { path, url } = useRouteMatch()
+    let { path } = useRouteMatch()
     const [item, setItem] = useState('schools')
 
     const history = useHistory()
@@ -20,6 +20,7 @@ const SchoolMenu = () => {
                 <Menu fluid tabular>
                     {SCHOOL_MENU.map((menu, index) => (
                         <MenuItem
+                            key={index}
                             name={menu.path}
                             active={item === menu.path}
                             onClick={handleClick} />
@@ -30,6 +31,7 @@ const SchoolMenu = () => {
                 <Menu fluid vertical tabular>
                     {SCHOOL_MENU.map((menu, index) => (
                         <MenuItem
+                            key={index}
                             name={menu.path}
                             active={item === menu.path}
                             onClick={handleClick} />
