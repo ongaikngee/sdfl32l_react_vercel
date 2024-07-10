@@ -1,16 +1,16 @@
-import React from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Doughnut } from 'react-chartjs-2'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-export default function HomeDoughnutChartComponent() {
+export default function SchoolRegResultChartPage({ chartData }) {
+    console.log('chartData', chartData)
     const data = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Phase 1', 'Phase 2A', 'Phase 2B', 'Phase 2C', 'Phase 2CS', 'Remainding'],
         datasets: [
             {
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'applicants',
+                data: chartData,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -34,5 +34,4 @@ export default function HomeDoughnutChartComponent() {
     return (
         <Doughnut data={data} />
     )
-
 }

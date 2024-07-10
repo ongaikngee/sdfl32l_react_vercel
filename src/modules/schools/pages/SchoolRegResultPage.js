@@ -1,18 +1,30 @@
 import { useState, useEffect } from 'react'
-import { APP_SETTING } from '../../common/constants/common'
-import { useParams, useHistory } from 'react-router-dom';
-import { GridRow, GridColumn, Dimmer, Loader, Label, Button } from 'semantic-ui-react';
+import { APP_SETTING, COLORS } from '../../common/constants/common'
+import { useParams, useHistory } from 'react-router-dom'
+import { GridRow, GridColumn, Dimmer, Loader, Label, Button } from 'semantic-ui-react'
+import SchoolRegResultChartPage from '../components/SchoolRegResultChartPage'
 
 export default function SchoolRegResultPage() {
 
     const { school } = useParams() // Get the id parameter from the URL
     const [result, setResult] = useState(null)
+    const [chartData, setChartData] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null);
     const history = useHistory()
     useEffect(() => {
         getAPI()
     }, [])
+    const settingChartData = (data) => {
+        const chartData = []
+        chartData.push(data[0].total_vacancy - data[0].phase_2a_vacancies - 60)
+        chartData.push(data[0].phase_2a_vacancies >= data[0].phase_2a_applicants? data[0].phase_2a_applicants : data[0].phase_2a_vacancies)
+        chartData.push(data[0].phase_2b_vacancies >= data[0].phase_2b_applicants? data[0].phase_2b_applicants : data[0].phase_2b_vacancies)
+        chartData.push(data[0].phase_2c_vacancies >= data[0].phase_2c_applicants? data[0].phase_2c_applicants : data[0].phase_2c_vacancies)
+        chartData.push(data[0].phase_2cs_vacancies >= data[0].phase_2cs_applicants? data[0].phase_2cs_applicants : data[0].phase_2cs_vacancies)
+        chartData.push(data[0].phase_2cs_vacancies >= data[0].phase_2cs_applicants? data[0].phase_2cs_vacancies - data[0].phase_2cs_applicants : 0)
+        setChartData(chartData)
+    }
 
     const getAPI = async () => {
         setError(null)
@@ -30,6 +42,7 @@ export default function SchoolRegResultPage() {
             }
             const data = await response.json();
             setResult(data)
+            settingChartData(data)
         } catch (e) {
             setError(e.message)
         } finally {
@@ -54,6 +67,7 @@ export default function SchoolRegResultPage() {
                         result.map(item => (
                             <div key={item.id} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
                                 <h2>{item.school} ({item.year})</h2>
+                                <SchoolRegResultChartPage chartData={chartData}/>
                                 <p>Total Vacancy: {item.total_vacancy}</p>
                                 <p>Phase 2A:</p>
                                 <ul>
@@ -84,7 +98,7 @@ export default function SchoolRegResultPage() {
                     ) : (
                         <p>No results found for {school}</p>
                     )}
-                    <Button onClick={()=>history.push(`/schools/${school}`)}>Click here</Button>
+                    <Button compact color={COLORS.semantic_primary} onClick={() => history.push(`/schools/${school}`)}>Return to Listing</Button>
                 </div>
 
             )}
