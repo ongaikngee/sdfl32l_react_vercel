@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Button, Form, FormInput, Input, FormField, Label, Header } from 'semantic-ui-react'
+import { Button, Form, Input, FormField, Label, Header } from 'semantic-ui-react'
 import AuthContext from "../context/AuthContext"
 import { COLORS } from "../../common/constants/common"
 
@@ -7,7 +7,6 @@ export default function LoginFormComponent() {
     let { errors, loginUser } = useContext(AuthContext)
     return (
         <Form onSubmit={loginUser}>
-
             <Header as='h2' color={COLORS.semantic_primary}>Sign in</Header>
             <FormField>
                 <Input
@@ -23,11 +22,6 @@ export default function LoginFormComponent() {
                         {errors.username}
                     </Label>
                 )}
-                {/* {errors.username ? (
-                    <Label basic color='red' pointing>
-                        {errors.username}
-                    </Label>
-                ) : (<></>)} */}
             </FormField>
             <FormField>
                 <Input

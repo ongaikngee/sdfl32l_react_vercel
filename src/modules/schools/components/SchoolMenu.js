@@ -4,7 +4,7 @@ import { useHistory, useRouteMatch } from "react-router-dom"
 import { SCHOOL_MENU } from "./SchoolRouterSwitch"
 
 const SchoolMenu = () => {
-    let { path, url } = useRouteMatch()
+    let { path } = useRouteMatch()
     const [item, setItem] = useState('schools')
 
     const history = useHistory()
