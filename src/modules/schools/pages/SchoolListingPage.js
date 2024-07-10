@@ -3,20 +3,22 @@ import { COLORS } from '../../common/constants/common'
 import {
     Grid, GridColumn, GridRow,
     Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell,
-    Pagination, Dimmer, Loader, Label, Button
+    Pagination, Dimmer, Loader, Label, Button, Input
 } from 'semantic-ui-react'
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const SchoolListingPage = () => {
+    const { school } = useParams() // Get the id parameter from the URL
     const [schools, setSchools] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [activePage, setActivePage] = useState(1); // current active page
+    const [query, setQuery] = useState('')
     const itemsPerPage = 10 // number of items per page
     const limit = 400 // limit queries records
     const startIndex = (activePage - 1) * itemsPerPage
     const endIndex = startIndex + itemsPerPage
-    const displayedSchools = schools.slice(startIndex, endIndex)
+    let displayedSchools = schools.slice(startIndex, endIndex)
 
     useEffect(() => {
         getAPI()
@@ -41,7 +43,12 @@ const SchoolListingPage = () => {
                 throw new Error(`Response status: ${response.status}`)
             }
             const data = await response.json()
-            const filteredSchools = data.result.records.filter(school => school.mainlevel_code === 'PRIMARY');
+            let filteredSchools = data.result.records.filter(school => school.mainlevel_code === 'PRIMARY');
+
+            if (school){
+                setQuery(school)
+            }
+
             setSchools(filteredSchools)
         } catch (e) {
             setError(e.message)
@@ -53,23 +60,36 @@ const SchoolListingPage = () => {
     const history = useHistory()
 
     const navigateToPage = (school) => {
-        history.push(`/schools/schoolResult/${school}`);
+        history.push(`/schools/schoolResult/${school}`)
     }
+
+    const handleSearch = (e) => {
+        setQuery(e.target.value)
+    }
+
+    const filteredSchools = schools.filter(school =>
+        school.school_name.toLowerCase().includes(query.toLowerCase())
+    )
+    displayedSchools = filteredSchools.slice(startIndex, endIndex)
 
     return (
         <Grid>
-            <GridRow>
-                <GridColumn>
-                    <Pagination
-                        activePage={activePage}
-                        onPageChange={handlePaginationChange}
-                        firstItem={null}
-                        lastItem={null}
-                        siblingRange={1}
-                        totalPages={Math.ceil(schools.length / itemsPerPage)}
-                    />
-                </GridColumn>
-            </GridRow>
+            {query ? (
+                <></>
+            ) : (
+                <GridRow>
+                    <GridColumn>
+                        <Pagination
+                            activePage={activePage}
+                            onPageChange={handlePaginationChange}
+                            firstItem={null}
+                            lastItem={null}
+                            siblingRange={1}
+                            totalPages={Math.ceil(schools.length / itemsPerPage)}
+                        />
+                    </GridColumn>
+                </GridRow>
+            )}
             {loading ? (
                 <GridRow style={{ height: '200px' }}>
                     <GridColumn>
@@ -79,30 +99,39 @@ const SchoolListingPage = () => {
                     </GridColumn>
                 </GridRow>
             ) : (
-                <GridRow>
-                    <GridColumn>
-                        <Table stackable celled striped singleLine color={COLORS.semantic_primary}>
-                            <TableHeader>
-                                <TableRow>
-                                    <Table.HeaderCell>Result</Table.HeaderCell>
-                                    <TableHeaderCell>Name</TableHeaderCell>
-                                    <TableHeaderCell>Address</TableHeaderCell>
-                                    <TableHeaderCell>Nature</TableHeaderCell>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {displayedSchools.map((school, index) => (
-                                    <TableRow key={index}>
-                                        <Table.Cell><Button onClick={() => navigateToPage(school.school_name)}>Result</Button></Table.Cell>
-                                        <TableCell>{school.school_name}</TableCell>
-                                        <TableCell>{school.address}</TableCell>
-                                        <TableCell>{school.nature_code}</TableCell>
+                <>
+                    <GridRow>
+                        <GridColumn>
+                            <Input placeholder='Search...'
+                                value={query}
+                                onChange={handleSearch} />
+                        </GridColumn>
+                    </GridRow>
+                    <GridRow>
+                        <GridColumn>
+                            <Table stackable celled striped singleLine color={COLORS.semantic_primary}>
+                                <TableHeader>
+                                    <TableRow>
+                                        <Table.HeaderCell>Result</Table.HeaderCell>
+                                        <TableHeaderCell>Name</TableHeaderCell>
+                                        <TableHeaderCell>Address</TableHeaderCell>
+                                        <TableHeaderCell>Nature</TableHeaderCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </GridColumn>
-                </GridRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {displayedSchools.map((school, index) => (
+                                        <TableRow key={index}>
+                                            <Table.Cell><Button onClick={() => navigateToPage(school.school_name)}>Result</Button></Table.Cell>
+                                            <TableCell>{school.school_name}</TableCell>
+                                            <TableCell>{school.address}</TableCell>
+                                            <TableCell>{school.nature_code}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </GridColumn>
+                    </GridRow>
+                </>
             )}
             {error && (
                 <GridRow>

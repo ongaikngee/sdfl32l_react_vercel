@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { APP_SETTING } from '../../common/constants/common'
-import { useParams } from 'react-router-dom';
-import { GridRow, GridColumn, Dimmer, Loader, Label } from 'semantic-ui-react';
+import { useParams, useHistory } from 'react-router-dom';
+import { GridRow, GridColumn, Dimmer, Loader, Label, Button } from 'semantic-ui-react';
 
 export default function SchoolRegResultPage() {
 
@@ -9,6 +9,7 @@ export default function SchoolRegResultPage() {
     const [result, setResult] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null);
+    const history = useHistory()
     useEffect(() => {
         getAPI()
     }, [])
@@ -83,6 +84,7 @@ export default function SchoolRegResultPage() {
                     ) : (
                         <p>No results found for {school}</p>
                     )}
+                    <Button onClick={()=>history.push(`/schools/${school}`)}>Click here</Button>
                 </div>
 
             )}
