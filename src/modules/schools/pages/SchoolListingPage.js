@@ -45,7 +45,7 @@ const SchoolListingPage = () => {
             const data = await response.json()
             let filteredSchools = data.result.records.filter(school => school.mainlevel_code === 'PRIMARY');
 
-            if (school){
+            if (school) {
                 setQuery(school)
             }
 
@@ -103,6 +103,8 @@ const SchoolListingPage = () => {
                     <GridRow>
                         <GridColumn>
                             <Input placeholder='Search...'
+                                iconPosition='left'
+                                icon='search'
                                 value={query}
                                 onChange={handleSearch} />
                         </GridColumn>
@@ -112,19 +114,19 @@ const SchoolListingPage = () => {
                             <Table stackable celled striped singleLine color={COLORS.semantic_primary}>
                                 <TableHeader>
                                     <TableRow>
-                                        <Table.HeaderCell>Result</Table.HeaderCell>
                                         <TableHeaderCell>Name</TableHeaderCell>
                                         <TableHeaderCell>Address</TableHeaderCell>
                                         <TableHeaderCell>Nature</TableHeaderCell>
+                                        <Table.HeaderCell>Result</Table.HeaderCell>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
                                     {displayedSchools.map((school, index) => (
                                         <TableRow key={index}>
-                                            <Table.Cell><Button onClick={() => navigateToPage(school.school_name)}>Result</Button></Table.Cell>
                                             <TableCell>{school.school_name}</TableCell>
                                             <TableCell>{school.address}</TableCell>
                                             <TableCell>{school.nature_code}</TableCell>
+                                            <Table.Cell><Button compact color={COLORS.semantic_primary} onClick={() => navigateToPage(school.school_name)}>Result</Button></Table.Cell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

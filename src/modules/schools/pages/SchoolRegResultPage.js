@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { APP_SETTING } from '../../common/constants/common'
+import { APP_SETTING, COLORS } from '../../common/constants/common'
 import { useParams, useHistory } from 'react-router-dom';
 import { GridRow, GridColumn, Dimmer, Loader, Label, Button } from 'semantic-ui-react';
 
@@ -84,7 +84,7 @@ export default function SchoolRegResultPage() {
                     ) : (
                         <p>No results found for {school}</p>
                     )}
-                    <Button onClick={()=>history.push(`/schools/${school}`)}>Click here</Button>
+                    <Button compact color={COLORS.semantic_primary} onClick={() => history.push(`/schools/${school}`)}>Click here</Button>
                 </div>
 
             )}
