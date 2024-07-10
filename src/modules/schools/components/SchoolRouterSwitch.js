@@ -21,9 +21,9 @@ const SchoolRouterSwitch = () => {
         <Switch>
             <Route exact path={`${path}`} component={SchoolListingPage} />
             <Route path={`${path}/schoolResult/:school`} component={SchoolRegResultPage} />
-            {SCHOOL_MENU.map((menu) => {
+            {SCHOOL_MENU.map((menu, index) => {
                 return (
-                    <Route path={`${path}/${menu.path}`} component={menu.page} />
+                    <Route key={index} path={`${path}/${menu.path}`} component={menu.page} />
                 )
             })}
             <Route path={`${path}/:school`} component={SchoolListingPage} />

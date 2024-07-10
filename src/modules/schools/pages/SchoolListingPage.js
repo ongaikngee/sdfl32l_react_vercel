@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { COLORS } from '../../common/constants/common'
 import {
     Grid, GridColumn, GridRow,
-    Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell,
     Pagination, Dimmer, Loader, Label, Button, Input
 } from 'semantic-ui-react'
 import { useHistory, useParams } from 'react-router-dom';
@@ -74,22 +73,6 @@ const SchoolListingPage = () => {
 
     return (
         <Grid>
-            {query ? (
-                <></>
-            ) : (
-                <GridRow>
-                    <GridColumn>
-                        <Pagination
-                            activePage={activePage}
-                            onPageChange={handlePaginationChange}
-                            firstItem={null}
-                            lastItem={null}
-                            siblingRange={1}
-                            totalPages={Math.ceil(schools.length / itemsPerPage)}
-                        />
-                    </GridColumn>
-                </GridRow>
-            )}
             {loading ? (
                 <GridRow style={{ height: '200px' }}>
                     <GridColumn>
@@ -102,7 +85,7 @@ const SchoolListingPage = () => {
                 <>
                     <GridRow>
                         <GridColumn>
-                            <Input placeholder='Search...'
+                            <Input placeholder='Search school...'
                                 iconPosition='left'
                                 icon='search'
                                 value={query}
@@ -111,26 +94,44 @@ const SchoolListingPage = () => {
                     </GridRow>
                     <GridRow>
                         <GridColumn>
-                            <Table stackable celled striped singleLine color={COLORS.semantic_primary}>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHeaderCell>Name</TableHeaderCell>
-                                        <TableHeaderCell>Address</TableHeaderCell>
-                                        <TableHeaderCell>Nature</TableHeaderCell>
-                                        <Table.HeaderCell>Result</Table.HeaderCell>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
+                            <table className={`ui celled striped single line ${COLORS.semantic_primary} table`}>
+                                <thead className="">
+                                    <tr className="">
+                                        <th className="">Name</th>
+                                        <th className="">Address</th>
+                                        <th className="">Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="">
                                     {displayedSchools.map((school, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell>{school.school_name}</TableCell>
-                                            <TableCell>{school.address}</TableCell>
-                                            <TableCell>{school.nature_code}</TableCell>
-                                            <Table.Cell><Button compact color={COLORS.semantic_primary} onClick={() => navigateToPage(school.school_name)}>Result</Button></Table.Cell>
-                                        </TableRow>
+                                        <tr className="" key={index}>
+                                            <td className="">{school.school_name}</td>
+                                            <td className="">{school.address}</td>
+                                            <td className=""><Button compact color={COLORS.semantic_primary} onClick={() => navigateToPage(school.school_name)}>Result</Button></td>
+                                        </tr>
                                     ))}
-                                </TableBody>
-                            </Table>
+                                </tbody>
+                                {!query &&
+                                    <tfoot className="">
+                                        <tr className="">
+                                            <th colSpan="4" className="right aligned">
+                                                <GridRow>
+                                                    <GridColumn>
+                                                        <Pagination
+                                                            activePage={activePage}
+                                                            onPageChange={handlePaginationChange}
+                                                            firstItem={null}
+                                                            lastItem={null}
+                                                            siblingRange={1}
+                                                            totalPages={Math.ceil(schools.length / itemsPerPage)}
+                                                        />
+                                                    </GridColumn>
+                                                </GridRow>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                }
+                            </table>
                         </GridColumn>
                     </GridRow>
                 </>
