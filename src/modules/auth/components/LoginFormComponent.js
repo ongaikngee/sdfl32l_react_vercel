@@ -1,10 +1,17 @@
-import React, { useContext } from "react"
+import React, { useState, useContext } from "react"
 import { Button, Form, Input, FormField, Label, Header } from 'semantic-ui-react'
 import AuthContext from "../context/AuthContext"
 import { COLORS } from "../../common/constants/common"
 
 export default function LoginFormComponent() {
+    const [showPassword, setShowPassword] = useState(false)
     let { errors, loginUser } = useContext(AuthContext)
+
+    const toggleShowPassword = (e) => {
+        e.preventDefault()
+        setShowPassword(!showPassword)
+    }
+
     return (
         <Form onSubmit={loginUser}>
             <Header as='h2' color={COLORS.semantic_primary}>Sign in</Header>
@@ -28,9 +35,13 @@ export default function LoginFormComponent() {
                     icon='lock'
                     iconPosition='left'
                     name='password'
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder='Enter Password'
                     error={!!errors.password}
+                    action={{
+                        icon: showPassword ? 'eye slash' : 'eye',
+                        onClick: toggleShowPassword
+                    }}
                     focus
                 />
                 {errors.password && (
