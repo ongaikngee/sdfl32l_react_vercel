@@ -1,7 +1,8 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Doughnut } from 'react-chartjs-2'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
-ChartJS.register(ArcElement, Tooltip, Legend)
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels)
 
 export default function SchoolRegResultChartPage({ chartData }) {
     const data = {
@@ -29,8 +30,23 @@ export default function SchoolRegResultChartPage({ chartData }) {
                 borderWidth: 1,
             },
         ],
+    }
+
+    const options = {
+        plugins: {
+            datalabels: {
+                anchor: 'middle',
+                align: 'center',
+                formatter: (value) => (value === 0 ? '' :`${value} taken`),
+                color: 'black'
+            },
+            legend: {
+                position: 'right',
+                display: true,
+            }
+        }
     };
     return (
-        <Doughnut data={data} />
+        <Doughnut data={data} options={options} />
     )
 }
