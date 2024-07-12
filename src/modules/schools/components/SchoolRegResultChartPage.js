@@ -37,7 +37,7 @@ export default function SchoolRegResultChartPage({ chartData }) {
             datalabels: {
                 anchor: 'middle',
                 align: 'center',
-                formatter: (value) => (value === 0 ? '' :`${value} taken`),
+                formatter: (value) => (value === 0 ? '' :`${value}`),
                 color: 'black'
             },
             legend: {
