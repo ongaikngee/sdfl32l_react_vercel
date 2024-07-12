@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import {
     Grid, GridColumn, GridRow,
     Dimmer, Loader,
-    Card, CardContent, CardHeader, CardMeta, CardDescription,
     Label, Icon
 } from 'semantic-ui-react'
 import moment from 'moment';
@@ -62,7 +61,6 @@ const SchoolRegPhasesInfoPage = () => {
         return dayWrapper.format(APP_SETTING.preferred_date_format)
     }
 
-
     // Methods to convert date Moment fromNow function
     const formatDateFromNow = (start, end) => {
         const now = moment()
@@ -92,34 +90,37 @@ const SchoolRegPhasesInfoPage = () => {
                 <Grid>
                     <GridRow>
                         <GridColumn>
-                            <div class="ui fluid unstackable steps">
+                            <div className="ui fluid unstackable steps">
                                 {phases.map((phase, index) => (
-                                    <div class="link step"
-                                        {...(item === phase.id && { class: 'step active' })}
+                                    <div key={index} className="link step"
+                                        {...(item === phase.id && { className: 'step active' })}
                                         onClick={(event) => handleClick(event, { my_id: phase.id })}>
-                                        <div class="content">
-                                            <div class="title">{removePhase(phase.phase_name)}</div>
+                                        <div className="content">
+                                            <div className="title">{removePhase(phase.phase_name)}</div>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                             {phases
                                 .filter(phase => phase.id === item) // Filter out the active item
-                                .map(phase => (
-                                    <Card ui fluid color={COLORS.semantic_primary}>
-                                        <CardContent>
-                                            <CardHeader>{phase.phase_name}</CardHeader>
-                                            <CardMeta>{formatDate(phase.start_date)} to {formatDate(phase.end_date)}</CardMeta>
-                                            <CardDescription>
+                                .map((phase, index) => (
+                                    <div key={index} className={`ui card fluid ${COLORS.semantic_primary}`}>
+                                        <div className="content">
+                                            <div className="header">{phase.phase_name}</div>
+                                            <div className="meta">
+                                                {formatDate(phase.start_date)} to {formatDate(phase.end_date)}
+                                            </div>
+                                            <div className="description">
                                                 <SchoolListConvertor description={phase.description} />
-                                            </CardDescription>
-                                        </CardContent>
-                                        <CardContent>
+                                            </div>
+                                        </div>
+                                        <div className="extra content">
                                             <Label color={COLORS.semantic_primary} ribbon='right'>
                                                 <Icon name='calendar alternate' />  {formatDateFromNow(phase.start_date, phase.end_date)}
                                             </Label>
-                                        </CardContent>
-                                    </Card>
+                                        </div>
+                                    </div>
+
                                 ))}
                         </GridColumn>
                     </GridRow>
