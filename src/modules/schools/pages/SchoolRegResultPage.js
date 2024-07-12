@@ -65,7 +65,7 @@ export default function SchoolRegResultPage() {
                     <h1>Results</h1>
                     {result && result.length > 0 ? (
                         result.map(item => (
-                            <div key={item.id} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+                            <div key={item.id} style={{ border: '1px solid #ccc', padding: '10px' }}>
                                 <h2>{item.school} ({item.year})</h2>
                                 <SchoolRegResultChartPage chartData={chartData}/>
                                 <p>Total Vacancy: {item.total_vacancy}</p>
