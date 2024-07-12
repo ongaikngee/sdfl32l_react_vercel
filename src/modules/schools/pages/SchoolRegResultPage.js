@@ -18,11 +18,11 @@ export default function SchoolRegResultPage() {
     const settingChartData = (data) => {
         const chartData = []
         chartData.push(data[0].total_vacancy - data[0].phase_2a_vacancies - 60)
-        chartData.push(data[0].phase_2a_vacancies >= data[0].phase_2a_applicants? data[0].phase_2a_applicants : data[0].phase_2a_vacancies)
-        chartData.push(data[0].phase_2b_vacancies >= data[0].phase_2b_applicants? data[0].phase_2b_applicants : data[0].phase_2b_vacancies)
-        chartData.push(data[0].phase_2c_vacancies >= data[0].phase_2c_applicants? data[0].phase_2c_applicants : data[0].phase_2c_vacancies)
-        chartData.push(data[0].phase_2cs_vacancies >= data[0].phase_2cs_applicants? data[0].phase_2cs_applicants : data[0].phase_2cs_vacancies)
-        chartData.push(data[0].phase_2cs_vacancies >= data[0].phase_2cs_applicants? data[0].phase_2cs_vacancies - data[0].phase_2cs_applicants : 0)
+        chartData.push(data[0].phase_2a_vacancies >= data[0].phase_2a_applicants ? data[0].phase_2a_applicants : data[0].phase_2a_vacancies)
+        chartData.push(data[0].phase_2b_vacancies >= data[0].phase_2b_applicants ? data[0].phase_2b_applicants : data[0].phase_2b_vacancies)
+        chartData.push(data[0].phase_2c_vacancies >= data[0].phase_2c_applicants ? data[0].phase_2c_applicants : data[0].phase_2c_vacancies)
+        chartData.push(data[0].phase_2cs_vacancies >= data[0].phase_2cs_applicants ? data[0].phase_2cs_applicants : data[0].phase_2cs_vacancies)
+        chartData.push(data[0].phase_2cs_vacancies >= data[0].phase_2cs_applicants ? data[0].phase_2cs_vacancies - data[0].phase_2cs_applicants : 0)
         setChartData(chartData)
     }
 
@@ -65,34 +65,53 @@ export default function SchoolRegResultPage() {
                     <h1>Results</h1>
                     {result && result.length > 0 ? (
                         result.map(item => (
-                            <div key={item.id} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+                            <div key={item.id} style={{ border: '1px solid #ccc', padding: '10px' }}>
                                 <h2>{item.school} ({item.year})</h2>
-                                <SchoolRegResultChartPage chartData={chartData}/>
-                                <p>Total Vacancy: {item.total_vacancy}</p>
-                                <p>Phase 2A:</p>
-                                <ul>
-                                    <li>Vacancies: {item.phase_2a_vacancies}</li>
-                                    <li>Applicants: {item.phase_2a_applicants}</li>
-                                    <li>Ballot: {item.phase_2a_ballot}</li>
-                                </ul>
-                                <p>Phase 2B:</p>
-                                <ul>
-                                    <li>Vacancies: {item.phase_2b_vacancies}</li>
-                                    <li>Applicants: {item.phase_2b_applicants}</li>
-                                    <li>Ballot: {item.phase_2b_ballot}</li>
-                                </ul>
-                                <p>Phase 2C:</p>
-                                <ul>
-                                    <li>Vacancies: {item.phase_2c_vacancies}</li>
-                                    <li>Applicants: {item.phase_2c_applicants}</li>
-                                    <li>Ballot: {item.phase_2c_ballot}</li>
-                                </ul>
-                                <p>Phase 2CS:</p>
-                                <ul>
-                                    <li>Vacancies: {item.phase_2cs_vacancies}</li>
-                                    <li>Applicants: {item.phase_2cs_applicants}</li>
-                                    <li>Ballot: {item.phase_2cs_ballot}</li>
-                                </ul>
+                                <SchoolRegResultChartPage chartData={chartData} />
+                                <table className="ui celled unstackable striped compact table">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Vacancies</th>
+                                            <th>Applicants</th>
+                                            <th>Ballot</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Phase 2A</td>
+                                            <td>{item.phase_2a_vacancies}</td>
+                                            <td>{item.phase_2a_applicants}</td>
+                                            <td>{item.phase_2a_ballot}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phase 2B</td>
+                                            <td>{item.phase_2b_vacancies}</td>
+                                            <td>{item.phase_2b_applicants}</td>
+                                            <td>{item.phase_2b_ballot}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phase 2C</td>
+                                            <td>{item.phase_2c_vacancies}</td>
+                                            <td>{item.phase_2c_applicants}</td>
+                                            <td>{item.phase_2c_ballot}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phase 2CS</td>
+                                            <td>{item.phase_2cs_vacancies}</td>
+                                            <td>{item.phase_2cs_applicants}</td>
+                                            <td>{item.phase_2cs_ballot}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot className="">
+                                        <tr className="">
+                                            <th colSpan="4" className="right aligned">
+                                                <p>Total Vacancy: {item.total_vacancy}</p>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
                             </div>
                         ))
                     ) : (
