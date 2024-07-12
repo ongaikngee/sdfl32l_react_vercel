@@ -8,22 +8,50 @@ export default function SchoolRegResultPage() {
 
     const { school } = useParams() // Get the id parameter from the URL
     const [result, setResult] = useState(null)
-    const [chartData, setChartData] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null);
     const history = useHistory()
     useEffect(() => {
         getAPI()
     }, [])
-    const settingChartData = (data) => {
+
+    const chartData = (data) => {
         const chartData = []
-        chartData.push(data[0].total_vacancy - data[0].phase_2a_vacancies - 60)
-        chartData.push(data[0].phase_2a_vacancies >= data[0].phase_2a_applicants ? data[0].phase_2a_applicants : data[0].phase_2a_vacancies)
-        chartData.push(data[0].phase_2b_vacancies >= data[0].phase_2b_applicants ? data[0].phase_2b_applicants : data[0].phase_2b_vacancies)
-        chartData.push(data[0].phase_2c_vacancies >= data[0].phase_2c_applicants ? data[0].phase_2c_applicants : data[0].phase_2c_vacancies)
-        chartData.push(data[0].phase_2cs_vacancies >= data[0].phase_2cs_applicants ? data[0].phase_2cs_applicants : data[0].phase_2cs_vacancies)
-        chartData.push(data[0].phase_2cs_vacancies >= data[0].phase_2cs_applicants ? data[0].phase_2cs_vacancies - data[0].phase_2cs_applicants : 0)
-        setChartData(chartData)
+        chartData.push(data.total_vacancy - data.phase_2a_vacancies - 60)
+        if (data.phase_2a_applicants != -1) {
+            chartData.push(data.phase_2a_vacancies >= data.phase_2a_applicants ? data.phase_2a_applicants : data.phase_2a_vacancies)
+        } else {
+            chartData.push(0)
+        }
+
+
+        if (data.phase_2b_applicants != -1) {
+            chartData.push(data.phase_2b_vacancies >= data.phase_2b_applicants ? data.phase_2b_applicants : data.phase_2b_vacancies)
+        } else {
+            chartData.push(0)
+        }
+
+
+        if (data.phase_2c_applicants != -1) {
+            chartData.push(data.phase_2c_vacancies >= data.phase_2c_applicants ? data.phase_2c_applicants : data.phase_2c_vacancies)
+        } else {
+            chartData.push(0)
+        }
+
+
+        if (data.phase_2cs_applicants != -1) {
+            chartData.push(data.phase_2cs_vacancies >= data.phase_2cs_applicants ? data.phase_2cs_applicants : data.phase_2cs_vacancies)
+        } else {
+            chartData.push(0)
+        }
+
+
+        if (data.phase_2cs_vacancies != -1) {
+            chartData.push(data.phase_2cs_vacancies >= data.phase_2cs_applicants ? data.phase_2cs_vacancies - data.phase_2cs_applicants : 0)
+        } else {
+            chartData.push(data.total_vacancy - data.phase_2a_applicants)
+        }
+        return chartData
     }
 
     const getAPI = async () => {
@@ -42,7 +70,6 @@ export default function SchoolRegResultPage() {
             }
             const data = await response.json();
             setResult(data)
-            settingChartData(data)
         } catch (e) {
             setError(e.message)
         } finally {
@@ -67,7 +94,7 @@ export default function SchoolRegResultPage() {
                         result.map(item => (
                             <div key={item.id} style={{ border: '1px solid #ccc', padding: '10px' }}>
                                 <h2>{item.school} ({item.year})</h2>
-                                <SchoolRegResultChartPage chartData={chartData} />
+                                <SchoolRegResultChartPage chartData={chartData(item)} />
                                 <table className="ui celled unstackable striped compact table">
                                     <thead>
                                         <tr>
