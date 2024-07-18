@@ -16,7 +16,6 @@ export default function LoginFormComponent() {
                     name='username'
                     placeholder='Enter Username'
                     error={!!errors.username}
-                    focus
                 />
                 {errors.username && (
                     <Label basic color='red' pointing>
